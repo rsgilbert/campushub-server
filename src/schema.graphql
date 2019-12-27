@@ -6,6 +6,7 @@ type Query {
 
 type Park {
     id: ID!
+    name: String
     manager: Manager
     location: Location
 }
