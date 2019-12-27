@@ -1,0 +1,13 @@
+{
+  "name": "hello-graphql",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Gilbert <gssenyonjo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/index.js"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  }
+}

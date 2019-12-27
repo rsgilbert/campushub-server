@@ -1,0 +1,21 @@
+type Query {
+    test: String!
+    parks: [Park!]!
+    park(id: ID!): Park
+}
+
+type Park {
+    id: ID!
+    manager: Manager
+    location: Location
+}
+
+type Manager {
+    id: ID!
+    name: String
+}
+
+type Location {
+    id: ID!
+    place: String
+}
