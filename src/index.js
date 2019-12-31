@@ -1,12 +1,26 @@
-// GraphQL lessons from https://www.howtographql.com/graphql-js/
-
-const { GraphQLServer } = require('graphql-yoga')
+const express = require('express')
+const fs = require('fs')
+const { ApolloServer, gql } = require('apollo-server-express')
 const resolvers = require('./resolvers')
+const routes = require('./routes')
 
-const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
+// schema
+const typeDefs = gql`${
+    fs.readFileSync(__dirname.concat('/schema.graphql'))}
+`;
+
+const server = new ApolloServer({
+    typeDefs,
     resolvers,
 })
 
-server.start(() => console.log('Server is running on localhost:4000'))
+// rest api
+const app = express()
+app.use(routes)
+server.applyMiddleware({ app })
+
+app.listen({ port: 4000 }, () => {
+    console.log("Server running on localhost:4000" + server.graphqlPath)
+})
+
 

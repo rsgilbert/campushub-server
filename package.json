@@ -8,6 +8,8 @@
     "start": "nodemon ./src/index.js"
   },
   "dependencies": {
+    "apollo-server-express": "^2.9.15",
+    "express": "^4.17.1",
     "graphql-yoga": "^1.18.3"
   }
 }

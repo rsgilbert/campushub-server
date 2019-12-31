@@ -1,7 +1,7 @@
 const resolvers = {
     Query: {
         test: () => `graphql API working`,
-        parks: () => parks,    
+        parks: () => parks,
         park: (_parent, args) => findPark(args.id)
     }
 }
@@ -14,8 +14,8 @@ let parks = [
         name: "Lovely Wandegeya Park",
         manager: {
             id: 0,
-            name: "Samuel"
-        }, 
+            name: "Sheilla"
+        },
         location: {
             id: 0,
             place: "Wandegeya"
@@ -27,7 +27,7 @@ let parks = [
         manager: {
             id: 0,
             name: "Jackson"
-        }, 
+        },
         location: {
             id: 0,
             place: "Salaama"
@@ -39,13 +39,14 @@ let parks = [
         manager: {
             id: 0,
             name: "Teletubies"
-        }, 
+        },
         location: {
             id: 0,
             place: "Bwayise"
         }
     },
 ]
+
 
 module.exports = resolvers
 
