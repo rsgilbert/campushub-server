@@ -20,6 +20,7 @@ const signup = async (_parent, args, context) => {
     }
 };
 
+// maybe should be in Query
 const login = async (_parent, args, context) => {
     const user = await context.prisma.user({
         email: args.email
