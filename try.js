@@ -6,4 +6,6 @@ const hash = async word => {
     console.log(word)
     return word
 }
+
+// worked as expected: Solved
 console.log(hash('kd'))

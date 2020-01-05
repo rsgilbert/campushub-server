@@ -41,12 +41,14 @@ const login = async (_parent, args, context) => {
     }
 };
 
+// creating or updating a park
 const park = (_parent, args, context) => {
     const userId = getUserId(context);
     return context.prisma.createPark({
         name: args.name,
-        location: {
-            place: args.place
+        managedBy: {
+            // connected by id in User Table
+            connect: { id: userId }
         }
     });
 };
@@ -56,4 +58,4 @@ module.exports = {
     signup,
     login,
     park
-}
+};

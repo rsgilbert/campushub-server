@@ -15,8 +15,8 @@ const typeDefs = gql`${
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: request => ({
-        ...request,
+    context: ({ req }) => ({
+        req,
         prisma
     })
 })
@@ -30,6 +30,6 @@ server.applyMiddleware({ app })
 
 app.listen({ port: 4000 }, () => {
     console.log("Server running on localhost:4000" + server.graphqlPath)
-})
+});
 
 
