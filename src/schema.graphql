@@ -33,7 +33,7 @@ type User {
     name: String
     email: String
     password: String
-    parks: [Park!]
+    parks: [Park!]!
 }
 
 type Location {
