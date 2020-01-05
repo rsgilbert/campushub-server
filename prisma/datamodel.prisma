@@ -1,4 +1,16 @@
 type User {
-  id: ID! @id
-  name: String!
+      id: ID! @id
+      name: String!
+}
+
+type Manager {
+    id: ID! @id
+    name: String
+    createdAt: DateTime! @createdAt
+}
+
+type Location {
+    id: ID! @id
+    place: String
+    createdAt: DateTime! @createdAt
 }

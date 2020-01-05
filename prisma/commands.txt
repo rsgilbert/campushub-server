@@ -1,0 +1,12 @@
+// setup prisma and choose db
+prisma init
+
+// starting server, inside docker-compose.yml directory
+docker-compose up -d
+
+// deploying prisma
+prisma deploy
+
+// generating client for datamodel
+// the client lets you read write data to db
+prisma generate
