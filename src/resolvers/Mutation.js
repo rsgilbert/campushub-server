@@ -6,9 +6,10 @@ const { APP_SECRET, getUserId } = require('../utils')
 const signup = async (_parent, args, context) => {
     const password = await bcrypt.hash(args.password, 10);
     const user = await context.prisma.createUser({
-        ...args,
-        password
+        email: args.email,
+        password: password
     });
+
     const token = jwt.sign({
         userId: user.id
     }, APP_SECRET);

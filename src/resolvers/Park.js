@@ -1,9 +1,9 @@
-const postedBy = (parent, args, context) => {
+const managedBy = (parent, args, context) => {
     return context.prisma.park({
         id: parent.id
-    }).postedBy()
-}
+    }).managedBy
+};
 
 module.exports = {
-    postedBy
-}
+    managedBy
+};

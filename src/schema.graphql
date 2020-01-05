@@ -32,7 +32,8 @@ type User {
     id: ID!
     name: String
     email: String
-    parks: [Park!]!
+    password: String
+    parks: [Park!]
 }
 
 type Location {
