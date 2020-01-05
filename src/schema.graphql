@@ -4,19 +4,44 @@ type Query {
     park(id: ID!): Park
 }
 
+type Mutation {
+    park(
+        name: String,
+        place: String
+    ): Park!
+
+    signup(
+        email: String!,
+        password: String!
+    ): AuthPayload
+
+    login(
+        email: String!,
+        password: String!
+    ): AuthPayload
+}
+
 type Park {
     id: ID!
     name: String
-    manager: Manager
     location: Location
+    managedBy: User
 }
 
-type Manager {
+type User {
     id: ID!
     name: String
+    email: String
+    parks: [Park!]!
 }
 
 type Location {
     id: ID!
     place: String
+}
+
+
+type AuthPayload {
+    token: String
+    user: User
 }

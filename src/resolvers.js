@@ -1,8 +1,17 @@
 const resolvers = {
     Query: {
         test: () => `graphql API working`,
-        parks: () => parks,
+        parks: (_parent, args, context) => {
+            return context.prisma.parks
+        },
         park: (_parent, args) => findPark(args.id)
+    },
+    Mutation: {
+        park: (_parent, args, context) => {
+            return context.prisma.createPark({
+                name: args.name
+            })
+        }
     }
 }
 
@@ -33,18 +42,7 @@ let parks = [
             place: "Salaama"
         }
     },
-    {
-        id: 'park-2',
-        name: "Munyonyo Parking",
-        manager: {
-            id: 0,
-            name: "Teletubies"
-        },
-        location: {
-            id: 0,
-            place: "Bwayise"
-        }
-    },
+
 ]
 
 

@@ -1,13 +1,21 @@
 type User {
       id: ID! @id
       name: String!
+      email: String! @unique
+      password: String!
+      parks: [Park!]!
+      createdAt: DateTime! @createdAt
 }
 
-type Manager {
+
+type Park {
     id: ID! @id
-    name: String
     createdAt: DateTime! @createdAt
+    name: String
+    location: Location
+    managedBy: User
 }
+
 
 type Location {
     id: ID! @id

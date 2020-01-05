@@ -10,3 +10,6 @@ prisma deploy
 // generating client for datamodel
 // the client lets you read write data to db
 prisma generate
+
+// to reset the prisma datamodel run:
+prisma reset
