@@ -1,11 +1,13 @@
 type Query {
     test: String!
     items: [Item!]!
+    stock: [Item!]
+    stockItem: Item
     item(id: ID!): Item
 }
 
 type Mutation {
-    item(
+    newItem(
         name: String
         price: Int
         description: String

@@ -8,8 +8,7 @@ const signup = async (_parent, args, context) => {
     const user = await context.prisma.createUser({
         email: args.email,
         password: password
-    });
-
+    })
     console.log(user.id)
 
     const token = jwt.sign({
@@ -46,12 +45,17 @@ const login = async (_parent, args, context) => {
     }
 };
 
+
 // creating or updating an item
-const item = (_parent, args, context) => {
+const newItem = (_parent, args, context) => {
     const userId = getUserId(context);
+    console.log("user id is " + userId)
     return context.prisma.createItem({
         name: args.name,
         price: args.price,
+        category: args.category,
+        inStock: args.inStock,
+        description: args.description,
         user: {
             // connected by id in User Table
             connect: { id: userId }
@@ -59,9 +63,8 @@ const item = (_parent, args, context) => {
     });
 };
 
-
 module.exports = {
     signup,
     login,
-    item
+    newItem
 };
