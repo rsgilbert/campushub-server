@@ -1,6 +1,6 @@
 const Mutation = require('./Mutation');
 const Query = require('./Query');
-const Park = require('./Park');
+const Item = require('./Item');
 const User = require('./User');
 
 
@@ -8,7 +8,7 @@ const User = require('./User');
 module.exports = {
     Mutation,
     Query,
-    Park,
+    Item,
     User
 };
 

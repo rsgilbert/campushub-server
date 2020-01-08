@@ -1,14 +1,18 @@
 type Query {
     test: String!
-    parks: [Park!]!
-    park(id: ID!): Park
+    items: [Item!]!
+    item(id: ID!): Item
 }
 
 type Mutation {
-    park(
+    item(
         name: String,
-        place: String
-    ): Park!
+        price: Int,
+        description: String,
+        category: String,
+        inStock: Boolean,
+        images: [String!],
+    ): Item!
 
     signup(
         email: String!,
@@ -21,24 +25,21 @@ type Mutation {
     ): AuthPayload
 }
 
-type Park {
+type Item {
     id: ID!
-    name: String
-    location: Location
-    managedBy: User
+    name: String!
+    price: Int
+    category: String
+    inStock: Boolean
+    images: [String!]
+    user: User
 }
 
 type User {
     id: ID!
-    name: String
     email: String
     password: String
-    parks: [Park!]!
-}
-
-type Location {
-    id: ID!
-    place: String
+    items: [Item!]!
 }
 
 

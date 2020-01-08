@@ -1,7 +1,7 @@
-endpoint: http://localhost:4466
-
+# campushub prisma db, uses port 4467
+endpoint: http://localhost:4467 
 datamodel: datamodel.prisma
 
 generate:
-    - generator: javascript-client
-      output: ../src/generated/prisma-client/
+  - generator: javascript-client
+    output: ../src/generated/prisma-client/

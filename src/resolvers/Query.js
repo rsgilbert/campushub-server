@@ -1,7 +1,7 @@
-const parks = (_parent, args, context) => {
-    return context.prisma.parks()
+const items = (_parent, args, context) => {
+    return context.prisma.items()
 };
 
 module.exports = {
-    parks
+    items
 };

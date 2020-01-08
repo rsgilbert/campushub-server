@@ -3,22 +3,26 @@ type User {
       name: String
       email: String! @unique
       password: String!
-      parks: [Park!]!
+      items: [Item!]
       createdAt: DateTime! @createdAt
 }
 
-
-type Park {
+type Item {
     id: ID! @id
     createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
     name: String
-    location: Location
-    managedBy: User
+    price: Int
+    category: String
+    inStock: Boolean
+    description: String
+    images: [Image]
+    user: User
 }
 
-
-type Location {
+type Image {
     id: ID! @id
-    place: String
-    createdAt: DateTime! @createdAt
+    src: String
 }
+
+

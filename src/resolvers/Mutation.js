@@ -42,12 +42,13 @@ const login = async (_parent, args, context) => {
     }
 };
 
-// creating or updating a park
-const park = (_parent, args, context) => {
+// creating or updating an item
+const item = (_parent, args, context) => {
     const userId = getUserId(context);
-    return context.prisma.createPark({
+    return context.prisma.createItem({
         name: args.name,
-        managedBy: {
+        price: args.price,
+        user: {
             // connected by id in User Table
             connect: { id: userId }
         }
@@ -58,5 +59,5 @@ const park = (_parent, args, context) => {
 module.exports = {
     signup,
     login,
-    park
+    item
 };
