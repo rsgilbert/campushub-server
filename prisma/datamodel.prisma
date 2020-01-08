@@ -3,7 +3,7 @@ type User {
       name: String
       email: String! @unique
       password: String!
-      items: [Item!]
+      items: [Item!]!
       createdAt: DateTime! @createdAt
 }
 
@@ -16,13 +16,13 @@ type Item {
     category: String
     inStock: Boolean
     description: String
-    images: [Image]
+    images: [Image!]!
     user: User
 }
 
 type Image {
     id: ID! @id
-    src: String
+    src: String!
 }
 
 

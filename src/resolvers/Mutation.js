@@ -10,14 +10,18 @@ const signup = async (_parent, args, context) => {
         password: password
     });
 
+    console.log(user.id)
+
     const token = jwt.sign({
         userId: user.id
     }, APP_SECRET);
 
-    return {
+    res  = {
         token,
         user
     }
+    console.log(res)
+    return res
 };
 
 // maybe should be in Query

@@ -427,7 +427,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface ImageCreateInput {
   id?: Maybe<ID_Input>;
-  src?: Maybe<String>;
+  src: String;
 }
 
 export interface ImageUpdateInput {
@@ -798,7 +798,7 @@ export interface NodeNode {
 
 export interface Image {
   id: ID_Output;
-  src?: String;
+  src: String;
 }
 
 export interface ImagePromise extends Promise<Image>, Fragmentable {
@@ -1189,7 +1189,7 @@ export interface ImageSubscriptionPayloadSubscription
 
 export interface ImagePreviousValues {
   id: ID_Output;
-  src?: String;
+  src: String;
 }
 
 export interface ImagePreviousValuesPromise

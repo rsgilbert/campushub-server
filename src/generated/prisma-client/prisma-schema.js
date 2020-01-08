@@ -23,7 +23,7 @@ scalar DateTime
 
 type Image {
   id: ID!
-  src: String
+  src: String!
 }
 
 type ImageConnection {
@@ -34,7 +34,7 @@ type ImageConnection {
 
 input ImageCreateInput {
   id: ID
-  src: String
+  src: String!
 }
 
 input ImageCreateManyInput {
@@ -56,7 +56,7 @@ enum ImageOrderByInput {
 
 type ImagePreviousValues {
   id: ID!
-  src: String
+  src: String!
 }
 
 input ImageScalarWhereInput {
