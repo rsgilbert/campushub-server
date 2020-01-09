@@ -5,6 +5,7 @@ const resolvers = require('./resolvers');
 const routes = require('./routes');
 const { prisma } = require('./generated/prisma-client');
 
+const port = process.env.PORT || 4000
 // schema
 const typeDefs = gql`${
     fs.readFileSync(__dirname.concat('/schema.graphql'))
@@ -28,8 +29,8 @@ app.use(routes);
 server.applyMiddleware({app});
 
 
-app.listen({port: 4000}, () => {
-    console.log("Server running on localhost:4000" + server.graphqlPath)
+app.listen({ port }, () => {
+    console.log(`Server running on localhost:${port}/${server.graphqlPath}`)
 });
 
 

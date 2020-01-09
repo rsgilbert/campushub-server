@@ -7,19 +7,11 @@ var models = [
   {
     name: "User",
     embedded: false
-  },
-  {
-    name: "Item",
-    embedded: false
-  },
-  {
-    name: "Image",
-    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/gilbert-a1a34e/campushub-server/dev`
+  endpoint: `http://localhost:4467`
 });
 exports.prisma = new exports.Prisma();

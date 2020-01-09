@@ -1,0 +1,28 @@
+type User {
+      id: ID! @id
+      name: String
+      email: String! @unique
+      password: String!
+      items: [Item!]!
+      createdAt: DateTime! @createdAt
+}
+
+type Item {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+    name: String
+    price: Int
+    category: String
+    inStock: Boolean
+    description: String
+    images: [Image!]!
+    user: User
+}
+
+type Image {
+    id: ID! @id
+    src: String!
+}
+
+
