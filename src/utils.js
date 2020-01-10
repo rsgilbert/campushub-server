@@ -5,9 +5,9 @@ const APP_SECRET = "Tim Peters-Linus Torvalds-Bill Gates";
 const getUserId = context => {
     console.log("Getting user id")
     const Authorization = context.req.headers.authorization;
-    if(!Authorization) {
-        throw new Error('Not Authenticated')
-    }
+    // if(!Authorization) {
+    //     throw new Error('Not Authenticated')
+    // }
     const token = Authorization.replace('Bearer ', '');
     const { userId } = jwt.verify(token, APP_SECRET);
     return userId

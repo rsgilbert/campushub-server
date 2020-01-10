@@ -1,7 +1,17 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { APP_SECRET, getUserId } = require('../utils')
+const fs = require('fs')
+const AWS = require('aws-sdk')
 
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID 
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY 
+const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME
+
+const s3 = new AWS.S3({
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY
+})
 
 const signup = async (_parent, args, context) => {
     const password = await bcrypt.hash(args.password, 10);
@@ -74,23 +84,30 @@ const item = async (_parent, args, context) => {
 
 
 const upload = async (_parent, args) => {
-    const userId = getUserId(context)
-    console.log('Mutation: user id is ' + userId)
-   
     const id = args.id
     const file = await args.file
-    const stream = await file.createReadStream()
-    console.log(stream)
+    const readStream = file.createReadStream() 
+
+    // const writeStream = fs.createWriteStream('./myimage.jpg')
+    // readStream.pipe(writeStream)
+
+    const params = {
+        Bucket: S3_BUCKET_NAME,
+        Key: fileName,
+        Body: readStream
+    }
+
+    s3.upload(params, (err, data) => {
+        if(err){ 
+            res.status(500).end()
+            throw err
+        }
+    })    
+
     const images = await context.prisma.item({
         id
     }).images()
     return images[0]
-//     return 
-
-//   return args.file.then(file => {
-//     console.log(file)
-//     // return file
-//   })
 }
 
 
