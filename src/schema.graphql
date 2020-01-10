@@ -2,18 +2,21 @@ type Query {
     test: String!
     items: [Item!]!
     stock: [Item!]
-    stockItem: Item
+    stockItem(id: ID!): Item
     item(id: ID!): Item
+    uploads: [File]
+    images(id: ID!): [Image]
 }
 
 type Mutation {
-    newItem(
-        name: String
-        price: Int
-        description: String
-        category: String
+    item(
+        id: ID,
+        name: String,
+        price: Int,
+        description: String,
+        category: String,
         inStock: Boolean
-    ): Item!
+    ): Item
 
     signup(
         email: String!,
@@ -24,11 +27,16 @@ type Mutation {
         email: String!,
         password: String!
     ): AuthPayload
+
+    upload(
+        id: ID!,
+        file: Upload!
+    ): Image
 }
 
 type Item {
     id: ID!
-    name: String!
+    name: String
     price: Int
     description: String
     category: String
@@ -53,4 +61,10 @@ type AuthPayload {
 type Image {
     id: ID!
     src: String
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
 }

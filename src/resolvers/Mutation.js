@@ -47,24 +47,56 @@ const login = async (_parent, args, context) => {
 
 
 // creating or updating an item
-const newItem = (_parent, args, context) => {
-    const userId = getUserId(context);
-    console.log("user id is " + userId)
-    return context.prisma.createItem({
+const item = async (_parent, args, context) => {
+    const userId = getUserId(context)
+    console.log('Mutation: user id is ' + userId)
+    const details = {
         name: args.name,
         price: args.price,
         category: args.category,
         inStock: args.inStock,
         description: args.description,
         user: {
-            // connected by id in User Table
             connect: { id: userId }
         }
-    });
+    }
+    const item = await context.prisma.upsertItem({
+        where: {
+            id: args.id || ''
+        }, 
+        update: details,
+        create: details
+    })
+    console.log("upsert:")
+    console.log(item)
+    return item
 };
+
+
+const upload = async (_parent, args) => {
+    const userId = getUserId(context)
+    console.log('Mutation: user id is ' + userId)
+   
+    const id = args.id
+    const file = await args.file
+    const stream = await file.createReadStream()
+    console.log(stream)
+    const images = await context.prisma.item({
+        id
+    }).images()
+    return images[0]
+//     return 
+
+//   return args.file.then(file => {
+//     console.log(file)
+//     // return file
+//   })
+}
+
 
 module.exports = {
     signup,
     login,
-    newItem
+    item,
+    upload,
 };

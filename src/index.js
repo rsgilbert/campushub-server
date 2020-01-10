@@ -11,7 +11,6 @@ const typeDefs = gql`${
     fs.readFileSync(__dirname.concat('/schema.graphql'))
 }`;
 
-
 // server
 const server = new ApolloServer({
     typeDefs,
@@ -30,7 +29,5 @@ server.applyMiddleware({app});
 
 
 app.listen({ port }, () => {
-    console.log(`Server running on localhost:${port}/${server.graphqlPath}`)
+    console.log(`Server running on localhost:${port}${server.graphqlPath}`)
 });
-
-

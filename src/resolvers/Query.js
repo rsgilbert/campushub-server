@@ -6,35 +6,51 @@ const items = async (_parent, args, context) => {
 };
 
 const item = async (_parent, args, context) => {
-    return await context.prisma.item({
+    console.log('it')
+    const item = await context.prisma.item({
         id: args.id
     })
+    return item
 }
 
-const stock = async (_parent, args, context) => {
+
+const stock = async (_parent, _args, context) => {
     const userId = getUserId(context)
+    console.log(userId)
     const stockItems = await context.prisma.user({
         id: userId
     }).items()
     console.log(stockItems)
-    return stockItems
+    return stockItems.reverse()
 }
 
 const stockItem = async (_parent, args, context) => {
     const userId = getUserId(context)
-    console.log('userid is ' + userId)
-    const stockItem = await context.prisma.user({
+    const items = await context.prisma.user({
         id: userId
-    }).stock().find(item => item.id === args.id)
-    console.log(stockItem)
-    return stockItem
+    }).items()
+    const item = items.find(item => item.id === args.id)
+    console.log(item)
+    return item
 }
+
+const images = async (_parent, args, context) => {
+    const id = args.id
+    const images = await context.prisma.item({
+        id
+    }).images()
+    return images
+}
+
+
 
 
 module.exports = {
     items,
     item,
     stock,
+    stockItem,
+    images,
 };
 
 

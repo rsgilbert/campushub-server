@@ -3,6 +3,7 @@ const APP_SECRET = "Tim Peters-Linus Torvalds-Bill Gates";
 
 // get user id from context
 const getUserId = context => {
+    console.log("Getting user id")
     const Authorization = context.req.headers.authorization;
     if(!Authorization) {
         throw new Error('Not Authenticated')
