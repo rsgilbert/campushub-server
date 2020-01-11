@@ -23,6 +23,9 @@ type Item {
 type Image {
     id: ID! @id
     src: String!
+    item: Item
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
 }
 
 

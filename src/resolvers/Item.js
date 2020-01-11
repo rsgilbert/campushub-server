@@ -5,6 +5,13 @@ const user = (parent, args, context) => {
     }).user()
 };
 
+const images = (parent, args, context) => {
+    return context.prisma.item({
+        id: parent.id
+    }).images()
+}
+
 module.exports = {
-    user
+    user,
+    images
 };

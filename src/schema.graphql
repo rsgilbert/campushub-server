@@ -32,6 +32,10 @@ type Mutation {
         id: ID!,
         file: Upload!
     ): Image
+
+    deleteImage(
+        id: ID!
+    ): Boolean
 }
 
 type Item {
@@ -61,6 +65,7 @@ type AuthPayload {
 type Image {
     id: ID!
     src: String
+    item: Item
 }
 
 type File {

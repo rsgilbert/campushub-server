@@ -4,6 +4,8 @@ const {ApolloServer, gql} = require('apollo-server-express');
 const resolvers = require('./resolvers');
 const routes = require('./routes');
 const { prisma } = require('./generated/prisma-client');
+require('dotenv').config()
+
 
 const port = process.env.PORT || 4000
 // schema

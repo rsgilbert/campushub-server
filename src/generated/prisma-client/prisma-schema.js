@@ -24,6 +24,9 @@ scalar DateTime
 type Image {
   id: ID!
   src: String!
+  item: Item
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ImageConnection {
@@ -35,11 +38,17 @@ type ImageConnection {
 input ImageCreateInput {
   id: ID
   src: String!
+  item: ItemCreateOneWithoutImagesInput
 }
 
-input ImageCreateManyInput {
-  create: [ImageCreateInput!]
+input ImageCreateManyWithoutItemInput {
+  create: [ImageCreateWithoutItemInput!]
   connect: [ImageWhereUniqueInput!]
+}
+
+input ImageCreateWithoutItemInput {
+  id: ID
+  src: String!
 }
 
 type ImageEdge {
@@ -52,11 +61,17 @@ enum ImageOrderByInput {
   id_DESC
   src_ASC
   src_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ImagePreviousValues {
   id: ID!
   src: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ImageScalarWhereInput {
@@ -88,6 +103,22 @@ input ImageScalarWhereInput {
   src_not_starts_with: String
   src_ends_with: String
   src_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ImageScalarWhereInput!]
   OR: [ImageScalarWhereInput!]
   NOT: [ImageScalarWhereInput!]
@@ -111,32 +142,29 @@ input ImageSubscriptionWhereInput {
   NOT: [ImageSubscriptionWhereInput!]
 }
 
-input ImageUpdateDataInput {
-  src: String
-}
-
 input ImageUpdateInput {
   src: String
+  item: ItemUpdateOneWithoutImagesInput
 }
 
 input ImageUpdateManyDataInput {
   src: String
 }
 
-input ImageUpdateManyInput {
-  create: [ImageCreateInput!]
-  update: [ImageUpdateWithWhereUniqueNestedInput!]
-  upsert: [ImageUpsertWithWhereUniqueNestedInput!]
+input ImageUpdateManyMutationInput {
+  src: String
+}
+
+input ImageUpdateManyWithoutItemInput {
+  create: [ImageCreateWithoutItemInput!]
   delete: [ImageWhereUniqueInput!]
   connect: [ImageWhereUniqueInput!]
   set: [ImageWhereUniqueInput!]
   disconnect: [ImageWhereUniqueInput!]
+  update: [ImageUpdateWithWhereUniqueWithoutItemInput!]
+  upsert: [ImageUpsertWithWhereUniqueWithoutItemInput!]
   deleteMany: [ImageScalarWhereInput!]
   updateMany: [ImageUpdateManyWithWhereNestedInput!]
-}
-
-input ImageUpdateManyMutationInput {
-  src: String
 }
 
 input ImageUpdateManyWithWhereNestedInput {
@@ -144,15 +172,19 @@ input ImageUpdateManyWithWhereNestedInput {
   data: ImageUpdateManyDataInput!
 }
 
-input ImageUpdateWithWhereUniqueNestedInput {
-  where: ImageWhereUniqueInput!
-  data: ImageUpdateDataInput!
+input ImageUpdateWithoutItemDataInput {
+  src: String
 }
 
-input ImageUpsertWithWhereUniqueNestedInput {
+input ImageUpdateWithWhereUniqueWithoutItemInput {
   where: ImageWhereUniqueInput!
-  update: ImageUpdateDataInput!
-  create: ImageCreateInput!
+  data: ImageUpdateWithoutItemDataInput!
+}
+
+input ImageUpsertWithWhereUniqueWithoutItemInput {
+  where: ImageWhereUniqueInput!
+  update: ImageUpdateWithoutItemDataInput!
+  create: ImageCreateWithoutItemInput!
 }
 
 input ImageWhereInput {
@@ -184,6 +216,23 @@ input ImageWhereInput {
   src_not_starts_with: String
   src_ends_with: String
   src_not_ends_with: String
+  item: ItemWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ImageWhereInput!]
   OR: [ImageWhereInput!]
   NOT: [ImageWhereInput!]
@@ -219,13 +268,28 @@ input ItemCreateInput {
   category: String
   inStock: Boolean
   description: String
-  images: ImageCreateManyInput
+  images: ImageCreateManyWithoutItemInput
   user: UserCreateOneWithoutItemsInput
 }
 
 input ItemCreateManyWithoutUserInput {
   create: [ItemCreateWithoutUserInput!]
   connect: [ItemWhereUniqueInput!]
+}
+
+input ItemCreateOneWithoutImagesInput {
+  create: ItemCreateWithoutImagesInput
+  connect: ItemWhereUniqueInput
+}
+
+input ItemCreateWithoutImagesInput {
+  id: ID
+  name: String
+  price: Int
+  category: String
+  inStock: Boolean
+  description: String
+  user: UserCreateOneWithoutItemsInput
 }
 
 input ItemCreateWithoutUserInput {
@@ -235,7 +299,7 @@ input ItemCreateWithoutUserInput {
   category: String
   inStock: Boolean
   description: String
-  images: ImageCreateManyInput
+  images: ImageCreateManyWithoutItemInput
 }
 
 type ItemEdge {
@@ -385,7 +449,7 @@ input ItemUpdateInput {
   category: String
   inStock: Boolean
   description: String
-  images: ImageUpdateManyInput
+  images: ImageUpdateManyWithoutItemInput
   user: UserUpdateOneWithoutItemsInput
 }
 
@@ -422,18 +486,41 @@ input ItemUpdateManyWithWhereNestedInput {
   data: ItemUpdateManyDataInput!
 }
 
+input ItemUpdateOneWithoutImagesInput {
+  create: ItemCreateWithoutImagesInput
+  update: ItemUpdateWithoutImagesDataInput
+  upsert: ItemUpsertWithoutImagesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ItemWhereUniqueInput
+}
+
+input ItemUpdateWithoutImagesDataInput {
+  name: String
+  price: Int
+  category: String
+  inStock: Boolean
+  description: String
+  user: UserUpdateOneWithoutItemsInput
+}
+
 input ItemUpdateWithoutUserDataInput {
   name: String
   price: Int
   category: String
   inStock: Boolean
   description: String
-  images: ImageUpdateManyInput
+  images: ImageUpdateManyWithoutItemInput
 }
 
 input ItemUpdateWithWhereUniqueWithoutUserInput {
   where: ItemWhereUniqueInput!
   data: ItemUpdateWithoutUserDataInput!
+}
+
+input ItemUpsertWithoutImagesInput {
+  update: ItemUpdateWithoutImagesDataInput!
+  create: ItemCreateWithoutImagesInput!
 }
 
 input ItemUpsertWithWhereUniqueWithoutUserInput {

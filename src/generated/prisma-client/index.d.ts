@@ -179,7 +179,15 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type ImageOrderByInput = "id_ASC" | "id_DESC" | "src_ASC" | "src_DESC";
+export type ImageOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "src_ASC"
+  | "src_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ItemOrderByInput =
   | "id_ASC"
@@ -246,14 +254,27 @@ export interface ImageWhereInput {
   src_not_starts_with?: Maybe<String>;
   src_ends_with?: Maybe<String>;
   src_not_ends_with?: Maybe<String>;
+  item?: Maybe<ItemWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ImageWhereInput[] | ImageWhereInput>;
   OR?: Maybe<ImageWhereInput[] | ImageWhereInput>;
   NOT?: Maybe<ImageWhereInput[] | ImageWhereInput>;
 }
-
-export type ItemWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
 
 export interface ItemWhereInput {
   id?: Maybe<ID_Input>;
@@ -420,6 +441,10 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export type ItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   email?: Maybe<String>;
@@ -428,30 +453,22 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface ImageCreateInput {
   id?: Maybe<ID_Input>;
   src: String;
+  item?: Maybe<ItemCreateOneWithoutImagesInput>;
 }
 
-export interface ImageUpdateInput {
-  src?: Maybe<String>;
+export interface ItemCreateOneWithoutImagesInput {
+  create?: Maybe<ItemCreateWithoutImagesInput>;
+  connect?: Maybe<ItemWhereUniqueInput>;
 }
 
-export interface ImageUpdateManyMutationInput {
-  src?: Maybe<String>;
-}
-
-export interface ItemCreateInput {
+export interface ItemCreateWithoutImagesInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
   price?: Maybe<Int>;
   category?: Maybe<String>;
   inStock?: Maybe<Boolean>;
   description?: Maybe<String>;
-  images?: Maybe<ImageCreateManyInput>;
   user?: Maybe<UserCreateOneWithoutItemsInput>;
-}
-
-export interface ImageCreateManyInput {
-  create?: Maybe<ImageCreateInput[] | ImageCreateInput>;
-  connect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
 }
 
 export interface UserCreateOneWithoutItemsInput {
@@ -466,49 +483,122 @@ export interface UserCreateWithoutItemsInput {
   password: String;
 }
 
+export interface ImageUpdateInput {
+  src?: Maybe<String>;
+  item?: Maybe<ItemUpdateOneWithoutImagesInput>;
+}
+
+export interface ItemUpdateOneWithoutImagesInput {
+  create?: Maybe<ItemCreateWithoutImagesInput>;
+  update?: Maybe<ItemUpdateWithoutImagesDataInput>;
+  upsert?: Maybe<ItemUpsertWithoutImagesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ItemWhereUniqueInput>;
+}
+
+export interface ItemUpdateWithoutImagesDataInput {
+  name?: Maybe<String>;
+  price?: Maybe<Int>;
+  category?: Maybe<String>;
+  inStock?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  user?: Maybe<UserUpdateOneWithoutItemsInput>;
+}
+
+export interface UserUpdateOneWithoutItemsInput {
+  create?: Maybe<UserCreateWithoutItemsInput>;
+  update?: Maybe<UserUpdateWithoutItemsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutItemsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutItemsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput;
+  create: UserCreateWithoutItemsInput;
+}
+
+export interface ItemUpsertWithoutImagesInput {
+  update: ItemUpdateWithoutImagesDataInput;
+  create: ItemCreateWithoutImagesInput;
+}
+
+export interface ImageUpdateManyMutationInput {
+  src?: Maybe<String>;
+}
+
+export interface ItemCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  price?: Maybe<Int>;
+  category?: Maybe<String>;
+  inStock?: Maybe<Boolean>;
+  description?: Maybe<String>;
+  images?: Maybe<ImageCreateManyWithoutItemInput>;
+  user?: Maybe<UserCreateOneWithoutItemsInput>;
+}
+
+export interface ImageCreateManyWithoutItemInput {
+  create?: Maybe<ImageCreateWithoutItemInput[] | ImageCreateWithoutItemInput>;
+  connect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
+}
+
+export interface ImageCreateWithoutItemInput {
+  id?: Maybe<ID_Input>;
+  src: String;
+}
+
 export interface ItemUpdateInput {
   name?: Maybe<String>;
   price?: Maybe<Int>;
   category?: Maybe<String>;
   inStock?: Maybe<Boolean>;
   description?: Maybe<String>;
-  images?: Maybe<ImageUpdateManyInput>;
+  images?: Maybe<ImageUpdateManyWithoutItemInput>;
   user?: Maybe<UserUpdateOneWithoutItemsInput>;
 }
 
-export interface ImageUpdateManyInput {
-  create?: Maybe<ImageCreateInput[] | ImageCreateInput>;
-  update?: Maybe<
-    | ImageUpdateWithWhereUniqueNestedInput[]
-    | ImageUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | ImageUpsertWithWhereUniqueNestedInput[]
-    | ImageUpsertWithWhereUniqueNestedInput
-  >;
+export interface ImageUpdateManyWithoutItemInput {
+  create?: Maybe<ImageCreateWithoutItemInput[] | ImageCreateWithoutItemInput>;
   delete?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
   connect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
   set?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
   disconnect?: Maybe<ImageWhereUniqueInput[] | ImageWhereUniqueInput>;
+  update?: Maybe<
+    | ImageUpdateWithWhereUniqueWithoutItemInput[]
+    | ImageUpdateWithWhereUniqueWithoutItemInput
+  >;
+  upsert?: Maybe<
+    | ImageUpsertWithWhereUniqueWithoutItemInput[]
+    | ImageUpsertWithWhereUniqueWithoutItemInput
+  >;
   deleteMany?: Maybe<ImageScalarWhereInput[] | ImageScalarWhereInput>;
   updateMany?: Maybe<
     ImageUpdateManyWithWhereNestedInput[] | ImageUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface ImageUpdateWithWhereUniqueNestedInput {
+export interface ImageUpdateWithWhereUniqueWithoutItemInput {
   where: ImageWhereUniqueInput;
-  data: ImageUpdateDataInput;
+  data: ImageUpdateWithoutItemDataInput;
 }
 
-export interface ImageUpdateDataInput {
+export interface ImageUpdateWithoutItemDataInput {
   src?: Maybe<String>;
 }
 
-export interface ImageUpsertWithWhereUniqueNestedInput {
+export interface ImageUpsertWithWhereUniqueWithoutItemInput {
   where: ImageWhereUniqueInput;
-  update: ImageUpdateDataInput;
-  create: ImageCreateInput;
+  update: ImageUpdateWithoutItemDataInput;
+  create: ImageCreateWithoutItemInput;
 }
 
 export interface ImageScalarWhereInput {
@@ -540,6 +630,22 @@ export interface ImageScalarWhereInput {
   src_not_starts_with?: Maybe<String>;
   src_ends_with?: Maybe<String>;
   src_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ImageScalarWhereInput[] | ImageScalarWhereInput>;
   OR?: Maybe<ImageScalarWhereInput[] | ImageScalarWhereInput>;
   NOT?: Maybe<ImageScalarWhereInput[] | ImageScalarWhereInput>;
@@ -552,26 +658,6 @@ export interface ImageUpdateManyWithWhereNestedInput {
 
 export interface ImageUpdateManyDataInput {
   src?: Maybe<String>;
-}
-
-export interface UserUpdateOneWithoutItemsInput {
-  create?: Maybe<UserCreateWithoutItemsInput>;
-  update?: Maybe<UserUpdateWithoutItemsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutItemsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutItemsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutItemsInput {
-  update: UserUpdateWithoutItemsDataInput;
-  create: UserCreateWithoutItemsInput;
 }
 
 export interface ItemUpdateManyMutationInput {
@@ -602,7 +688,7 @@ export interface ItemCreateWithoutUserInput {
   category?: Maybe<String>;
   inStock?: Maybe<Boolean>;
   description?: Maybe<String>;
-  images?: Maybe<ImageCreateManyInput>;
+  images?: Maybe<ImageCreateManyWithoutItemInput>;
 }
 
 export interface UserUpdateInput {
@@ -643,7 +729,7 @@ export interface ItemUpdateWithoutUserDataInput {
   category?: Maybe<String>;
   inStock?: Maybe<Boolean>;
   description?: Maybe<String>;
-  images?: Maybe<ImageUpdateManyInput>;
+  images?: Maybe<ImageUpdateManyWithoutItemInput>;
 }
 
 export interface ItemUpsertWithWhereUniqueWithoutUserInput {
@@ -799,11 +885,16 @@ export interface NodeNode {
 export interface Image {
   id: ID_Output;
   src: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ImagePromise extends Promise<Image>, Fragmentable {
   id: () => Promise<ID_Output>;
   src: () => Promise<String>;
+  item: <T = ItemPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ImageSubscription
@@ -811,6 +902,9 @@ export interface ImageSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   src: () => Promise<AsyncIterator<String>>;
+  item: <T = ItemSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ImageNullablePromise
@@ -818,83 +912,9 @@ export interface ImageNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   src: () => Promise<String>;
-}
-
-export interface ImageConnection {
-  pageInfo: PageInfo;
-  edges: ImageEdge[];
-}
-
-export interface ImageConnectionPromise
-  extends Promise<ImageConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ImageEdge>>() => T;
-  aggregate: <T = AggregateImagePromise>() => T;
-}
-
-export interface ImageConnectionSubscription
-  extends Promise<AsyncIterator<ImageConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ImageEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateImageSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ImageEdge {
-  node: Image;
-  cursor: String;
-}
-
-export interface ImageEdgePromise extends Promise<ImageEdge>, Fragmentable {
-  node: <T = ImagePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ImageEdgeSubscription
-  extends Promise<AsyncIterator<ImageEdge>>,
-    Fragmentable {
-  node: <T = ImageSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateImage {
-  count: Int;
-}
-
-export interface AggregateImagePromise
-  extends Promise<AggregateImage>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateImageSubscription
-  extends Promise<AsyncIterator<AggregateImage>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  item: <T = ItemPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface Item {
@@ -1036,6 +1056,83 @@ export interface UserNullablePromise
     last?: Int;
   }) => T;
   createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface ImageConnection {
+  pageInfo: PageInfo;
+  edges: ImageEdge[];
+}
+
+export interface ImageConnectionPromise
+  extends Promise<ImageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ImageEdge>>() => T;
+  aggregate: <T = AggregateImagePromise>() => T;
+}
+
+export interface ImageConnectionSubscription
+  extends Promise<AsyncIterator<ImageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ImageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateImageSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ImageEdge {
+  node: Image;
+  cursor: String;
+}
+
+export interface ImageEdgePromise extends Promise<ImageEdge>, Fragmentable {
+  node: <T = ImagePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ImageEdgeSubscription
+  extends Promise<AsyncIterator<ImageEdge>>,
+    Fragmentable {
+  node: <T = ImageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateImage {
+  count: Int;
+}
+
+export interface AggregateImagePromise
+  extends Promise<AggregateImage>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateImageSubscription
+  extends Promise<AsyncIterator<AggregateImage>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ItemConnection {
@@ -1190,6 +1287,8 @@ export interface ImageSubscriptionPayloadSubscription
 export interface ImagePreviousValues {
   id: ID_Output;
   src: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ImagePreviousValuesPromise
@@ -1197,6 +1296,8 @@ export interface ImagePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   src: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ImagePreviousValuesSubscription
@@ -1204,6 +1305,8 @@ export interface ImagePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   src: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ItemSubscriptionPayload {
@@ -1333,16 +1436,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1351,6 +1444,16 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 export type Long = string;
 

@@ -20,7 +20,11 @@ const stock = async (_parent, _args, context) => {
     const stockItems = await context.prisma.user({
         id: userId
     }).items()
+    // const images = await context.prisma.images({
+    //     id: 
+    // })
     console.log(stockItems)
+
     return stockItems.reverse()
 }
 
