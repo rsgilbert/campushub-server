@@ -13,6 +13,7 @@ const typeDefs = gql`${
     fs.readFileSync(__dirname.concat('/schema.graphql'))
 }`;
 
+
 // server
 const server = new ApolloServer({
     typeDefs,

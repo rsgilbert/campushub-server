@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { APP_SECRET, getUserId } = require('../../utils')
-const { deleteImage } = require('./delete')
-const upload = require('./upload')
+const { 
+    upload, editImage, deleteImage
+} = require('./image')
 
 
 
@@ -83,5 +84,6 @@ module.exports = {
     login,
     item,
     upload,
-    deleteImage
+    deleteImage,
+    editImage
 };

@@ -42,4 +42,33 @@ const upload = async (_parent, args, context) => {
     return image
 }
 
-module.exports = upload
+
+const deleteImage = async (parent, args, context) => {
+    console.log("deleting")
+    await context.prisma.deleteImage({
+        id: args.id
+    })
+    return true
+}
+
+
+const editImage = async (parent, args, context) => {
+    const imageId = args.id
+    console.log("editing..")
+    const updatedImage = await context.prisma.updateImage({
+        where: {
+            id: imageId
+        }, 
+        data: {
+            src: '/me.jpg'
+        }
+    })
+    console.log(updatedImage)
+    return updatedImage
+}
+
+module.exports = {
+    upload,
+    deleteImage,
+    editImage,
+}

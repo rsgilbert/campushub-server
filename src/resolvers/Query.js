@@ -2,8 +2,11 @@ const { getUserId } = require('../utils')
  
 
 const items = async (_parent, args, context) => {
-    return await context.prisma.items()
+    return await context.prisma.items({
+        orderBy: "updatedAt_DESC"
+    })
 };
+
 
 const item = async (_parent, args, context) => {
     console.log('it')
@@ -19,13 +22,11 @@ const stock = async (_parent, _args, context) => {
     console.log(userId)
     const stockItems = await context.prisma.user({
         id: userId
-    }).items()
-    // const images = await context.prisma.images({
-    //     id: 
-    // })
+    }).items({
+        orderBy: "updatedAt_DESC"
+    })
     console.log(stockItems)
-
-    return stockItems.reverse()
+    return stockItems
 }
 
 const stockItem = async (_parent, args, context) => {

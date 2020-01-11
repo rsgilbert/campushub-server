@@ -36,6 +36,10 @@ type Mutation {
     deleteImage(
         id: ID!
     ): Boolean
+
+    editImage(
+        id: ID!
+    ): Image
 }
 
 type Item {
