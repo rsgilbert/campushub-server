@@ -257,6 +257,7 @@ type Item {
   description: String
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image!]
   user: User
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
 type ItemConnection {
@@ -274,6 +275,7 @@ input ItemCreateInput {
   description: String
   images: ImageCreateManyWithoutItemInput
   user: UserCreateOneWithoutItemsInput
+  orders: OrderCreateManyWithoutItemInput
 }
 
 input ItemCreateManyWithoutUserInput {
@@ -281,13 +283,13 @@ input ItemCreateManyWithoutUserInput {
   connect: [ItemWhereUniqueInput!]
 }
 
-input ItemCreateOneInput {
-  create: ItemCreateInput
+input ItemCreateOneWithoutImagesInput {
+  create: ItemCreateWithoutImagesInput
   connect: ItemWhereUniqueInput
 }
 
-input ItemCreateOneWithoutImagesInput {
-  create: ItemCreateWithoutImagesInput
+input ItemCreateOneWithoutOrdersInput {
+  create: ItemCreateWithoutOrdersInput
   connect: ItemWhereUniqueInput
 }
 
@@ -299,6 +301,18 @@ input ItemCreateWithoutImagesInput {
   inStock: Boolean
   description: String
   user: UserCreateOneWithoutItemsInput
+  orders: OrderCreateManyWithoutItemInput
+}
+
+input ItemCreateWithoutOrdersInput {
+  id: ID
+  name: String
+  price: Int
+  category: String
+  inStock: Boolean
+  description: String
+  images: ImageCreateManyWithoutItemInput
+  user: UserCreateOneWithoutItemsInput
 }
 
 input ItemCreateWithoutUserInput {
@@ -309,6 +323,7 @@ input ItemCreateWithoutUserInput {
   inStock: Boolean
   description: String
   images: ImageCreateManyWithoutItemInput
+  orders: OrderCreateManyWithoutItemInput
 }
 
 type ItemEdge {
@@ -452,16 +467,6 @@ input ItemSubscriptionWhereInput {
   NOT: [ItemSubscriptionWhereInput!]
 }
 
-input ItemUpdateDataInput {
-  name: String
-  price: Int
-  category: String
-  inStock: Boolean
-  description: String
-  images: ImageUpdateManyWithoutItemInput
-  user: UserUpdateOneWithoutItemsInput
-}
-
 input ItemUpdateInput {
   name: String
   price: Int
@@ -470,6 +475,7 @@ input ItemUpdateInput {
   description: String
   images: ImageUpdateManyWithoutItemInput
   user: UserUpdateOneWithoutItemsInput
+  orders: OrderUpdateManyWithoutItemInput
 }
 
 input ItemUpdateManyDataInput {
@@ -505,19 +511,19 @@ input ItemUpdateManyWithWhereNestedInput {
   data: ItemUpdateManyDataInput!
 }
 
-input ItemUpdateOneInput {
-  create: ItemCreateInput
-  update: ItemUpdateDataInput
-  upsert: ItemUpsertNestedInput
+input ItemUpdateOneWithoutImagesInput {
+  create: ItemCreateWithoutImagesInput
+  update: ItemUpdateWithoutImagesDataInput
+  upsert: ItemUpsertWithoutImagesInput
   delete: Boolean
   disconnect: Boolean
   connect: ItemWhereUniqueInput
 }
 
-input ItemUpdateOneWithoutImagesInput {
-  create: ItemCreateWithoutImagesInput
-  update: ItemUpdateWithoutImagesDataInput
-  upsert: ItemUpsertWithoutImagesInput
+input ItemUpdateOneWithoutOrdersInput {
+  create: ItemCreateWithoutOrdersInput
+  update: ItemUpdateWithoutOrdersDataInput
+  upsert: ItemUpsertWithoutOrdersInput
   delete: Boolean
   disconnect: Boolean
   connect: ItemWhereUniqueInput
@@ -530,6 +536,17 @@ input ItemUpdateWithoutImagesDataInput {
   inStock: Boolean
   description: String
   user: UserUpdateOneWithoutItemsInput
+  orders: OrderUpdateManyWithoutItemInput
+}
+
+input ItemUpdateWithoutOrdersDataInput {
+  name: String
+  price: Int
+  category: String
+  inStock: Boolean
+  description: String
+  images: ImageUpdateManyWithoutItemInput
+  user: UserUpdateOneWithoutItemsInput
 }
 
 input ItemUpdateWithoutUserDataInput {
@@ -539,6 +556,7 @@ input ItemUpdateWithoutUserDataInput {
   inStock: Boolean
   description: String
   images: ImageUpdateManyWithoutItemInput
+  orders: OrderUpdateManyWithoutItemInput
 }
 
 input ItemUpdateWithWhereUniqueWithoutUserInput {
@@ -546,14 +564,14 @@ input ItemUpdateWithWhereUniqueWithoutUserInput {
   data: ItemUpdateWithoutUserDataInput!
 }
 
-input ItemUpsertNestedInput {
-  update: ItemUpdateDataInput!
-  create: ItemCreateInput!
-}
-
 input ItemUpsertWithoutImagesInput {
   update: ItemUpdateWithoutImagesDataInput!
   create: ItemCreateWithoutImagesInput!
+}
+
+input ItemUpsertWithoutOrdersInput {
+  update: ItemUpdateWithoutOrdersDataInput!
+  create: ItemCreateWithoutOrdersInput!
 }
 
 input ItemUpsertWithWhereUniqueWithoutUserInput {
@@ -649,6 +667,9 @@ input ItemWhereInput {
   images_some: ImageWhereInput
   images_none: ImageWhereInput
   user: UserWhereInput
+  orders_every: OrderWhereInput
+  orders_some: OrderWhereInput
+  orders_none: OrderWhereInput
   AND: [ItemWhereInput!]
   OR: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
@@ -706,7 +727,6 @@ type Order {
   phone: String
   createdAt: DateTime!
   updatedAt: DateTime!
-  user: User
 }
 
 type OrderConnection {
@@ -717,22 +737,20 @@ type OrderConnection {
 
 input OrderCreateInput {
   id: ID
-  item: ItemCreateOneInput
+  item: ItemCreateOneWithoutOrdersInput
   cancelled: Boolean
   completed: Boolean
   location: String
   phone: String
-  user: UserCreateOneWithoutOrdersInput
 }
 
-input OrderCreateManyWithoutUserInput {
-  create: [OrderCreateWithoutUserInput!]
+input OrderCreateManyWithoutItemInput {
+  create: [OrderCreateWithoutItemInput!]
   connect: [OrderWhereUniqueInput!]
 }
 
-input OrderCreateWithoutUserInput {
+input OrderCreateWithoutItemInput {
   id: ID
-  item: ItemCreateOneInput
   cancelled: Boolean
   completed: Boolean
   location: String
@@ -858,12 +876,11 @@ input OrderSubscriptionWhereInput {
 }
 
 input OrderUpdateInput {
-  item: ItemUpdateOneInput
+  item: ItemUpdateOneWithoutOrdersInput
   cancelled: Boolean
   completed: Boolean
   location: String
   phone: String
-  user: UserUpdateOneWithoutOrdersInput
 }
 
 input OrderUpdateManyDataInput {
@@ -880,14 +897,14 @@ input OrderUpdateManyMutationInput {
   phone: String
 }
 
-input OrderUpdateManyWithoutUserInput {
-  create: [OrderCreateWithoutUserInput!]
+input OrderUpdateManyWithoutItemInput {
+  create: [OrderCreateWithoutItemInput!]
   delete: [OrderWhereUniqueInput!]
   connect: [OrderWhereUniqueInput!]
   set: [OrderWhereUniqueInput!]
   disconnect: [OrderWhereUniqueInput!]
-  update: [OrderUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [OrderUpsertWithWhereUniqueWithoutUserInput!]
+  update: [OrderUpdateWithWhereUniqueWithoutItemInput!]
+  upsert: [OrderUpsertWithWhereUniqueWithoutItemInput!]
   deleteMany: [OrderScalarWhereInput!]
   updateMany: [OrderUpdateManyWithWhereNestedInput!]
 }
@@ -897,23 +914,22 @@ input OrderUpdateManyWithWhereNestedInput {
   data: OrderUpdateManyDataInput!
 }
 
-input OrderUpdateWithoutUserDataInput {
-  item: ItemUpdateOneInput
+input OrderUpdateWithoutItemDataInput {
   cancelled: Boolean
   completed: Boolean
   location: String
   phone: String
 }
 
-input OrderUpdateWithWhereUniqueWithoutUserInput {
+input OrderUpdateWithWhereUniqueWithoutItemInput {
   where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutUserDataInput!
+  data: OrderUpdateWithoutItemDataInput!
 }
 
-input OrderUpsertWithWhereUniqueWithoutUserInput {
+input OrderUpsertWithWhereUniqueWithoutItemInput {
   where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutUserDataInput!
-  create: OrderCreateWithoutUserInput!
+  update: OrderUpdateWithoutItemDataInput!
+  create: OrderCreateWithoutItemInput!
 }
 
 input OrderWhereInput {
@@ -980,7 +996,6 @@ input OrderWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  user: UserWhereInput
   AND: [OrderWhereInput!]
   OR: [OrderWhereInput!]
   NOT: [OrderWhereInput!]
@@ -1027,7 +1042,6 @@ type User {
   password: String!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
   createdAt: DateTime!
-  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
 type UserConnection {
@@ -1042,16 +1056,10 @@ input UserCreateInput {
   email: String!
   password: String!
   items: ItemCreateManyWithoutUserInput
-  orders: OrderCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutItemsInput {
   create: UserCreateWithoutItemsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutOrdersInput {
-  create: UserCreateWithoutOrdersInput
   connect: UserWhereUniqueInput
 }
 
@@ -1060,15 +1068,6 @@ input UserCreateWithoutItemsInput {
   name: String
   email: String!
   password: String!
-  orders: OrderCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutOrdersInput {
-  id: ID
-  name: String
-  email: String!
-  password: String!
-  items: ItemCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -1120,7 +1119,6 @@ input UserUpdateInput {
   email: String
   password: String
   items: ItemUpdateManyWithoutUserInput
-  orders: OrderUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1138,37 +1136,15 @@ input UserUpdateOneWithoutItemsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutOrdersInput {
-  create: UserCreateWithoutOrdersInput
-  update: UserUpdateWithoutOrdersDataInput
-  upsert: UserUpsertWithoutOrdersInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateWithoutItemsDataInput {
   name: String
   email: String
   password: String
-  orders: OrderUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutOrdersDataInput {
-  name: String
-  email: String
-  password: String
-  items: ItemUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutItemsInput {
   update: UserUpdateWithoutItemsDataInput!
   create: UserCreateWithoutItemsInput!
-}
-
-input UserUpsertWithoutOrdersInput {
-  update: UserUpdateWithoutOrdersDataInput!
-  create: UserCreateWithoutOrdersInput!
 }
 
 input UserWhereInput {
@@ -1239,9 +1215,6 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  orders_every: OrderWhereInput
-  orders_some: OrderWhereInput
-  orders_none: OrderWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

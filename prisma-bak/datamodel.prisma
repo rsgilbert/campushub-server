@@ -5,7 +5,6 @@ type User {
       password: String!
       items: [Item!]!
       createdAt: DateTime! @createdAt
-      orders: [Order!]
 }
 
 type Item {
@@ -19,6 +18,7 @@ type Item {
     description: String
     images: [Image!]!
     user: User
+    orders: [Order!]
 }
 
 type Image {
@@ -38,8 +38,6 @@ type Order {
     phone: String
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
-    user: User
-
 
 }
 

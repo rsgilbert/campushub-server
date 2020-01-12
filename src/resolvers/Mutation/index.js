@@ -79,21 +79,22 @@ const item = async (_parent, args, context) => {
 
 
 const order = async (_parent, args, context) => {
-    const userId = getUserId(context)
-    console.log('Mutation: user id is ' + userId)
+    const orderId = args.id || ''
+    const itemId = args.itemId
+    console.log('Mutation: item id is ' + itemId)
     const details = {
         cancelled: args.cancelled || false,
         completed: args.completed || false,
         location: args.location,
         phone: args.phone,
-        user: {
-            connect: { id: userId }
+        item: {
+            connect: { id: itemId }
         }
     }
 
     const order = await context.prisma.upsertOrder({
         where: {
-            id: args.id || '' // if a person has given an id
+            id: orderId // if a person has given an id
         }, 
         update: details, 
         create: details

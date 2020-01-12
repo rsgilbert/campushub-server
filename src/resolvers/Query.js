@@ -1,22 +1,21 @@
 const { getUserId } = require('../utils')
  
-
-const items = async (_parent, args, context) => {
+// query for all items
+const items = async (_parent, _args, context) => {
     return await context.prisma.items({
         orderBy: "updatedAt_DESC"
     })
 };
 
-
+// query for an item based on its id
 const item = async (_parent, args, context) => {
-    console.log('it')
     const item = await context.prisma.item({
         id: args.id
     })
     return item
 }
 
-
+// query for all items posted by a user
 const stock = async (_parent, _args, context) => {
     const userId = getUserId(context)
     console.log(userId)
@@ -29,6 +28,7 @@ const stock = async (_parent, _args, context) => {
     return stockItems
 }
 
+// query for an item posted by a user
 const stockItem = async (_parent, args, context) => {
     const userId = getUserId(context)
     const items = await context.prisma.user({
@@ -39,26 +39,38 @@ const stockItem = async (_parent, args, context) => {
     return item
 }
 
+// query for all images of an item
 const images = async (_parent, args, context) => {
     const itemId = args.id
     const images = await context.prisma.item({
         id: itemId
-    }).images()
+    }).images({
+        orderBy: "updatedAt_DESC"
+    })
     return images
 }
 
-const orders = async (_parent, args, context) => {
+// query for orders whose items belong to the user
+const orders = async (_parent, _args, context) => {
     const userId = getUserId(context)
-    const orders = await context.prisma.user({
-        id: userId
-    }).orders()
+    const orders = await context.prisma.orders({
+        where: {
+            item: { user: { id: userId } }
+        }        
+    })
     console.log(orders)
-
     return orders
 }
 
-
-
+// query for a particular order
+const order = async (_parent, args, context) => {
+    const orderId = args.id
+    const order = await context.prisma.order({
+        id: orderId
+    })
+    console.log(order)
+    return order
+}
 
 
 module.exports = {
@@ -68,6 +80,7 @@ module.exports = {
     stockItem,
     images,
     orders,
+    order,
 };
 
 
