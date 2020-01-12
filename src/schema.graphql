@@ -7,6 +7,7 @@ type Query {
     images(id: ID!): [Image]
     orders: [Order]
     order(id: ID!): Order
+    user: User
 }
 
 type Mutation {
@@ -50,6 +51,13 @@ type Mutation {
         location: String
         phone: String
     ) : Order
+
+    user (
+        name: String,
+        location: String,
+        email: String,
+        phone: String
+    ) : User
 }
 
 type Item {
@@ -69,6 +77,10 @@ type User {
     email: String
     password: String
     items: [Item!]!
+    name: String
+    location: String
+    phone: String
+
 }
 
 

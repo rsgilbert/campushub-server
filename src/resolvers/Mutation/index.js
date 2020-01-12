@@ -81,7 +81,7 @@ const item = async (_parent, args, context) => {
 const order = async (_parent, args, context) => {
     const orderId = args.id || ''
     const itemId = args.itemId
-    console.log('Mutation: item id is ' + itemId)
+    console.log('Mutation: order id is ' + orderId)
     const details = {
         cancelled: args.cancelled || false,
         completed: args.completed || false,
@@ -91,7 +91,7 @@ const order = async (_parent, args, context) => {
             connect: { id: itemId }
         }
     }
-
+    console.log(details)
     const order = await context.prisma.upsertOrder({
         where: {
             id: orderId // if a person has given an id
@@ -106,6 +106,21 @@ const order = async (_parent, args, context) => {
 };
 
 
+const user = async (_parent, args, context) => {
+    const userId = getUserId(context)
+    const user = await context.prisma.updateUser({
+        where: {
+            id: userId
+        },
+        data: args
+    })
+    console.log(user)
+    return user
+}
+
+
+
+
 module.exports = {
     signup,
     login,
@@ -114,4 +129,5 @@ module.exports = {
     deleteImage,
     editImage,
     order,
+    user
 };

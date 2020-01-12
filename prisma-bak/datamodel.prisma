@@ -1,10 +1,15 @@
 type User {
-      id: ID! @id
-      name: String
-      email: String! @unique
-      password: String!
-      items: [Item!]!
-      createdAt: DateTime! @createdAt
+    id: ID! @id
+    name: String  
+    phone: String    
+    location: String
+    email: String! @unique
+    password: String!
+    items: [Item!]!
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @createdAt
+
+
 }
 
 type Item {
@@ -38,6 +43,5 @@ type Order {
     phone: String
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
-
 }
 

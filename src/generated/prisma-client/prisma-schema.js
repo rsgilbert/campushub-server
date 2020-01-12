@@ -1038,10 +1038,13 @@ type Subscription {
 type User {
   id: ID!
   name: String
+  phone: String
+  location: String
   email: String!
   password: String!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
   createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -1053,6 +1056,8 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String
+  phone: String
+  location: String
   email: String!
   password: String!
   items: ItemCreateManyWithoutUserInput
@@ -1066,6 +1071,8 @@ input UserCreateOneWithoutItemsInput {
 input UserCreateWithoutItemsInput {
   id: ID
   name: String
+  phone: String
+  location: String
   email: String!
   password: String!
 }
@@ -1080,20 +1087,29 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  phone_ASC
+  phone_DESC
+  location_ASC
+  location_DESC
   email_ASC
   email_DESC
   password_ASC
   password_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String
+  phone: String
+  location: String
   email: String!
   password: String!
   createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -1116,6 +1132,8 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  phone: String
+  location: String
   email: String
   password: String
   items: ItemUpdateManyWithoutUserInput
@@ -1123,6 +1141,8 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   name: String
+  phone: String
+  location: String
   email: String
   password: String
 }
@@ -1138,6 +1158,8 @@ input UserUpdateOneWithoutItemsInput {
 
 input UserUpdateWithoutItemsDataInput {
   name: String
+  phone: String
+  location: String
   email: String
   password: String
 }
@@ -1176,6 +1198,34 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -1215,6 +1265,14 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

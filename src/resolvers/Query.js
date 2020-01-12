@@ -62,6 +62,15 @@ const orders = async (_parent, _args, context) => {
     return orders
 }
 
+const user = async (_parent, _args, context) => {
+    const userId = getUserId(context)
+    const user = await context.prisma.user({
+        id: userId
+    })
+    console.log(user)
+    return user
+}
+
 // query for a particular order
 const order = async (_parent, args, context) => {
     const orderId = args.id
@@ -81,6 +90,7 @@ module.exports = {
     images,
     orders,
     order,
+    user
 };
 
 

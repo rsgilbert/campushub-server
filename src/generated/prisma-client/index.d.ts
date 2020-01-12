@@ -267,12 +267,18 @@ export type UserOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "location_ASC"
+  | "location_DESC"
   | "email_ASC"
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -455,6 +461,34 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -494,6 +528,14 @@ export interface UserWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -611,6 +653,8 @@ export interface UserCreateOneWithoutItemsInput {
 export interface UserCreateWithoutItemsInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
+  phone?: Maybe<String>;
+  location?: Maybe<String>;
   email: String;
   password: String;
 }
@@ -663,6 +707,8 @@ export interface UserUpdateOneWithoutItemsInput {
 
 export interface UserUpdateWithoutItemsDataInput {
   name?: Maybe<String>;
+  phone?: Maybe<String>;
+  location?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
 }
@@ -1001,6 +1047,8 @@ export interface OrderUpdateManyMutationInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
+  phone?: Maybe<String>;
+  location?: Maybe<String>;
   email: String;
   password: String;
   items?: Maybe<ItemCreateManyWithoutUserInput>;
@@ -1024,6 +1072,8 @@ export interface ItemCreateWithoutUserInput {
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
+  phone?: Maybe<String>;
+  location?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   items?: Maybe<ItemUpdateManyWithoutUserInput>;
@@ -1173,6 +1223,8 @@ export interface ItemUpdateManyDataInput {
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
+  phone?: Maybe<String>;
+  location?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
 }
@@ -1368,14 +1420,19 @@ export interface ItemNullablePromise
 export interface User {
   id: ID_Output;
   name?: String;
+  phone?: String;
+  location?: String;
   email: String;
   password: String;
   createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  phone: () => Promise<String>;
+  location: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   items: <T = FragmentableArray<Item>>(args?: {
@@ -1388,6 +1445,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     last?: Int;
   }) => T;
   createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserSubscription
@@ -1395,6 +1453,8 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   items: <T = Promise<AsyncIterator<ItemSubscription>>>(args?: {
@@ -1407,6 +1467,7 @@ export interface UserSubscription
     last?: Int;
   }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserNullablePromise
@@ -1414,6 +1475,8 @@ export interface UserNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  phone: () => Promise<String>;
+  location: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   items: <T = FragmentableArray<Item>>(args?: {
@@ -1426,6 +1489,7 @@ export interface UserNullablePromise
     last?: Int;
   }) => T;
   createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface Order {
@@ -1929,9 +1993,12 @@ export interface UserSubscriptionPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   name?: String;
+  phone?: String;
+  location?: String;
   email: String;
   password: String;
   createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface UserPreviousValuesPromise
@@ -1939,9 +2006,12 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  phone: () => Promise<String>;
+  location: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1949,9 +2019,12 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 /*
