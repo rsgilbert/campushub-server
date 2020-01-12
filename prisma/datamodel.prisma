@@ -1,10 +1,15 @@
 type User {
-      id: ID! @id
-      name: String
-      email: String! @unique
-      password: String!
-      items: [Item!]!
-      createdAt: DateTime! @createdAt
+    id: ID! @id
+    name: String  
+    phone: String    
+    location: String
+    email: String! @unique
+    password: String!
+    items: [Item!]!
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @createdAt
+
+
 }
 
 type Item {
@@ -18,11 +23,25 @@ type Item {
     description: String
     images: [Image!]!
     user: User
+    orders: [Order!]
 }
 
 type Image {
     id: ID! @id
     src: String!
+    item: Item
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
 }
 
+type Order {
+    id: ID! @id
+    item: Item
+    cancelled: Boolean
+    completed: Boolean
+    location: String
+    phone: String
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+}
 
