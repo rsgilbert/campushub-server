@@ -78,6 +78,32 @@ const item = async (_parent, args, context) => {
 
 
 
+const order = async (_parent, args, context) => {
+    const userId = getUserId(context)
+    console.log('Mutation: user id is ' + userId)
+    const details = {
+        cancelled: args.cancelled || false,
+        completed: args.completed || false,
+        location: args.location,
+        phone: args.phone,
+        user: {
+            connect: { id: userId }
+        }
+    }
+
+    const order = await context.prisma.upsertOrder({
+        where: {
+            id: args.id || '' // if a person has given an id
+        }, 
+        update: details, 
+        create: details
+    })
+      
+    console.log("upsert:")
+    console.log(order)
+    return order
+};
+
 
 module.exports = {
     signup,
@@ -85,5 +111,6 @@ module.exports = {
     item,
     upload,
     deleteImage,
-    editImage
+    editImage,
+    order,
 };

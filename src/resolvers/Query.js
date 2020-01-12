@@ -40,12 +40,23 @@ const stockItem = async (_parent, args, context) => {
 }
 
 const images = async (_parent, args, context) => {
-    const id = args.id
+    const itemId = args.id
     const images = await context.prisma.item({
-        id
+        id: itemId
     }).images()
     return images
 }
+
+const orders = async (_parent, args, context) => {
+    const userId = getUserId(context)
+    const orders = await context.prisma.user({
+        id: userId
+    }).orders()
+    console.log(orders)
+
+    return orders
+}
+
 
 
 
@@ -56,6 +67,7 @@ module.exports = {
     stock,
     stockItem,
     images,
+    orders,
 };
 
 

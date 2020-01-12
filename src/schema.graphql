@@ -6,6 +6,7 @@ type Query {
     item(id: ID!): Item
     uploads: [File]
     images(id: ID!): [Image]
+    orders: [Order]
 }
 
 type Mutation {
@@ -40,6 +41,14 @@ type Mutation {
     editImage(
         id: ID!
     ): Image
+
+    order(
+        id: ID
+        cancelled: Boolean
+        completed: Boolean
+        location: String
+        phone: String
+    ) : Order
 }
 
 type Item {
@@ -58,6 +67,7 @@ type User {
     email: String
     password: String
     items: [Item!]!
+    orders: [Order!]
 }
 
 
@@ -76,4 +86,15 @@ type File {
   filename: String!
   mimetype: String!
   encoding: String!
+}
+
+type Order {
+    id: ID! 
+    item: Item
+    cancelled: Boolean
+    completed: Boolean
+    location: String
+    phone: String
+    user: User 
+
 }

@@ -1,7 +1,7 @@
 // resolves parks field on User type
-const items = (parent, _args, context) => {
+const items =  async (parent, _args, context) => {
     console.log("Id for user " + parent.id)
-    const items = context.prisma.user({
+    const items = await context.prisma.user({
         id: parent.id
     }).items()
     return items
