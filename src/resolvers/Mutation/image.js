@@ -27,9 +27,9 @@ const upload = async (_parent, args, context) => {
         Body: readStream
     }
 
-    let link = '/clare.PNG'
-    // const result = await s3.upload(params).promise()
-    // link = result.Location
+    // let link = '/clare.PNG'
+    const result = await s3.upload(params).promise()
+    link = result.Location
     console.log(link)
 
     const image = await context.prisma.createImage({
