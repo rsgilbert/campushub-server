@@ -7,7 +7,7 @@ type User {
     password: String!
     items: [Item!]!
     createdAt: DateTime! @createdAt
-    updatedAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
 
 
 }
